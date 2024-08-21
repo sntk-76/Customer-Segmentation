@@ -64,9 +64,11 @@ This project demonstrates the effectiveness of clustering techniques in customer
    
    cd your-repository
 
+
 3. Install the required dependencies:
    
-pip install -r requirements.txt
+   pip install -r requirements.txt
+
 
 4. Run the Jupyter notebook to perform the analysis and visualize the results.
 Feel free to explore the code and modify it to suit your needs. If you have any questions or suggestions, please open an issue or submit a pull request.
