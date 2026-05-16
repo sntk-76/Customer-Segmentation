@@ -1,76 +1,188 @@
-# Customer Segmentation Analysis
+![Customer Segmentation cover](assets/customer-segmentation-cover.png)
 
-This repository contains a comprehensive analysis of customer segmentation using various clustering techniques. The goal of this project is to identify distinct customer segments based on their purchasing behavior and visualize the results.
+# Customer Segmentation
 
-## Table of Contents
-- Introduction
-- Dataset
-- Data Preprocessing
-- Exploratory Data Analysis
-- Clustering
-- Principal Component Analysis (PCA)
-- Mean Shift Clustering
-- Results
-- Conclusion
-- Dependencies
-- Usage
+**Unsupervised machine learning analysis for Online Retail customer segmentation using Python, Pandas, Seaborn, scikit-learn, K-Means, PCA, and Mean Shift clustering.**
 
-## Introduction
-Customer segmentation is a crucial task in marketing and business strategy. By identifying distinct customer segments, businesses can tailor their marketing efforts and improve customer satisfaction. In this project, we use various clustering techniques to segment customers based on their purchasing behavior.
+[GitHub profile](https://github.com/sntk-76)
+
+## Overview
+
+Customer Segmentation is a notebook-based analytics and machine learning project that groups customers from an Online Retail transaction dataset into behavioral segments. The project walks through the full segmentation workflow: data loading, cleaning, categorical encoding, normalization, exploratory analysis, clustering, dimensionality reduction, and model evaluation.
+
+The goal is to transform raw transaction records into interpretable customer groups that can support marketing strategy, retention analysis, customer profiling, and business decision-making.
+
+## Why This Project Matters
+
+Customer segmentation is one of the most practical applications of unsupervised learning. Businesses often have transaction-level data but no predefined labels for customer types. Clustering helps discover natural structure in purchasing behavior, making it easier to target promotions, identify high-value groups, and understand customer diversity.
+
+For recruiters and technical reviewers, this project demonstrates hands-on skill with real-world data preparation, feature scaling, clustering algorithms, PCA visualization, and cluster-quality evaluation.
+
+## Core Capabilities
+
+| Capability | Implementation |
+| --- | --- |
+| Transaction dataset loading | Reads the Online Retail Excel dataset into Pandas. |
+| Data cleaning | Drops missing values and removes invalid negative-quantity records. |
+| Categorical encoding | Uses `LabelEncoder` for invoice, product, customer, country, and date-related fields. |
+| Feature scaling | Applies `MinMaxScaler` with a `1` to `5` range for clustering-ready features. |
+| Exploratory analysis | Uses histograms, pair plots, and correlation heatmaps to inspect distributions and relationships. |
+| K-Means clustering | Evaluates cluster counts from `k=2` to `k=11` and trains a 5-cluster model. |
+| Cluster evaluation | Compares Silhouette Score, Calinski-Harabasz Score, Davies-Bouldin Score, and WCSS. |
+| PCA visualization | Reduces feature space for 2D and 3D cluster visualization and explained-variance analysis. |
+| Mean Shift clustering | Applies density-based clustering on a sampled subset for algorithm comparison. |
+
+## Analysis Workflow
+
+```mermaid
+flowchart LR
+    A[Online Retail Excel Dataset] --> B[Load with Pandas]
+    B --> C[Clean Missing and Invalid Rows]
+    C --> D[Encode Categorical Fields]
+    D --> E[Scale Features]
+    E --> F[EDA and Correlation Analysis]
+    F --> G[K-Means Clustering]
+    G --> H[Cluster Metrics]
+    E --> I[PCA Visualization]
+    E --> J[Mean Shift Clustering]
+    H --> K[Customer Segments]
+    I --> K
+    J --> K
+```
+
+## Technical Stack
+
+| Layer | Tools |
+| --- | --- |
+| Language | Python |
+| Notebook environment | Jupyter Notebook |
+| Data handling | Pandas, NumPy |
+| Visualization | Matplotlib, Seaborn |
+| Preprocessing | LabelEncoder, MinMaxScaler |
+| Clustering | K-Means, Mean Shift |
+| Dimensionality reduction | PCA |
+| Evaluation | Silhouette, Calinski-Harabasz, Davies-Bouldin, WCSS |
+
+## Repository Structure
+
+```text
+Customer-Segmentation/
+|-- assets/
+|   `-- customer-segmentation-cover.png
+|-- customer-segmentation (1).ipynb   # Main analysis notebook
+|-- requirements.txt
+|-- LICENSE
+`-- README.md
+```
 
 ## Dataset
-The dataset used in this analysis is the "Online Retail" dataset, which contains transactional data for a UK-based online retail store. The dataset includes information such as invoice number, stock code, description, quantity, invoice date, unit price, customer ID, and country.
 
-## Data Preprocessing
-1. **Loading the Dataset**: The dataset is loaded from an Excel file using `pandas`.
-2. **Cleaning the Data**: Missing values are removed, and the index is reset.
-3. **Encoding Categorical Features**: Categorical features are encoded into numerical values using `LabelEncoder`.
-4. **Normalizing the Data**: Features are scaled to a range of 1 to 5 using `MinMaxScaler`.
+The notebook uses the Online Retail dataset, a transaction-level dataset for a UK-based online retail business. The expected fields include:
+
+- `InvoiceNo`
+- `StockCode`
+- `Description`
+- `Quantity`
+- `InvoiceDate`
+- `UnitPrice`
+- `CustomerID`
+- `Country`
+
+The dataset is not committed in this repository. The notebook currently references a Kaggle path:
+
+```python
+pd.read_excel('/kaggle/input/customer-segmentation-dataset/Online Retail.xlsx')
+```
+
+To run the project locally, download the dataset and update the notebook path accordingly.
+
+## Preprocessing
+
+The notebook prepares the dataset by:
+
+1. Loading the Excel file with Pandas.
+2. Removing rows with missing values.
+3. Encoding categorical fields with `LabelEncoder`.
+4. Dropping `InvoiceDate` after encoding and transformation steps.
+5. Removing records with negative `Quantity`.
+6. Scaling all remaining features with `MinMaxScaler(feature_range=(1, 5))`.
+7. Creating a normalized DataFrame for clustering.
 
 ## Exploratory Data Analysis
-1. **Histograms**: Histograms are created for all features to visualize their distributions.
-2. **Pair Plots**: Pair plots are generated to visualize relationships between pairs of features.
-3. **Correlation Heatmap**: A heatmap is created to visualize the correlation between features.
 
-## Clustering
-1. **K-Means Clustering**: K-Means clustering is performed for different values of K (2 to 11). The Elbow method is used to determine the optimal number of clusters.
-2. **Evaluation Metrics**: Clustering performance is evaluated using Silhouette Score, Calinski-Harabasz Score, and Davies-Bouldin Score.
-3. **Visualization**: Scatter plots are created to visualize the clusters and their centroids.
+The EDA section includes:
 
-## Principal Component Analysis (PCA)
-1. **Dimensionality Reduction**: PCA is performed to reduce the dimensionality of the data while retaining most of the variance.
-2. **Explained Variance**: The explained variance for different numbers of principal components is evaluated.
-3. **Visualization**: 2D and 3D scatter plots are created to visualize the PCA results.
+- Histograms for feature distributions.
+- Pair plots on a sampled subset.
+- Correlation heatmap for normalized features.
+- PCA scatter plot for two-dimensional structure inspection.
+- Feature-level distribution plots with KDE curves.
 
-## Mean Shift Clustering
-1. **Sampling the Data**: A random sample of 5000 rows is taken from the normalized DataFrame.
-2. **Estimating Bandwidth**: The bandwidth parameter for the Mean Shift algorithm is estimated.
-3. **Clustering**: Mean Shift clustering is performed on the sampled data.
-4. **Visualization**: Scatter plots are created to visualize the clusters and their centroids.
+## Clustering and Evaluation
 
-## Results
-The analysis identified distinct customer segments based on their purchasing behavior. The optimal number of clusters was determined using the Elbow method and evaluation metrics. The clusters were visualized using scatter plots and PCA, providing valuable insights into the distribution of data points across different clusters.
+The project evaluates K-Means over multiple cluster counts:
 
-## Conclusion
-This project demonstrates the effectiveness of clustering techniques in customer segmentation. By identifying distinct customer segments, businesses can tailor their marketing efforts and improve customer satisfaction. The use of PCA and various evaluation metrics ensures that the clustering results are reliable and meaningful.
+```python
+k_value = [i for i in range(2, 12)]
+```
 
+For each value of `k`, the notebook computes:
 
-## Usage
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/your-repository.git
-   
-2. Navigate to the repository directory:
-   ```bash
-   cd your-repository
+- WCSS for elbow-method inspection.
+- Silhouette Score.
+- Calinski-Harabasz Score.
+- Davies-Bouldin Score.
 
+The final K-Means model uses:
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
+```python
+KMeans(n_clusters=5, random_state=0)
+```
 
+The notebook also applies PCA for visualizing cluster structure and Mean Shift clustering on a sampled subset of the normalized data.
 
-4. Run the Jupyter notebook to perform the analysis and visualize the results.
-Feel free to explore the code and modify it to suit your needs. If you have any questions or suggestions, please open an issue or submit a pull request.
+## Running Locally
 
-Happy analyzing!
+```bash
+git clone https://github.com/sntk-76/Customer-Segmentation.git
+cd Customer-Segmentation
+
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+On macOS/Linux, activate the environment with:
+
+```bash
+source .venv/bin/activate
+```
+
+Then open the notebook:
+
+```bash
+jupyter notebook "customer-segmentation (1).ipynb"
+```
+
+Before running all cells, place the Online Retail Excel file locally and update the `pd.read_excel(...)` path in the notebook.
+
+## Project Highlights
+
+- Demonstrates a full unsupervised learning workflow on transactional retail data.
+- Uses both centroid-based and density-based clustering approaches.
+- Applies multiple cluster-quality metrics instead of relying on a single visual heuristic.
+- Uses PCA for lower-dimensional inspection of high-dimensional customer records.
+- Connects customer analytics with practical marketing and business segmentation use cases.
+
+## Future Improvements
+
+- Engineer stronger business features such as recency, frequency, monetary value, average basket size, and return rate.
+- Replace label-encoded identifiers with customer-level behavioral aggregates.
+- Export cluster profiles with descriptive business names.
+- Add visual cluster summaries and segment-level KPI tables.
+- Convert the notebook into a reproducible Python pipeline.
+- Build an interactive dashboard for exploring segment behavior.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
